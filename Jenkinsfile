@@ -33,7 +33,7 @@ pipeline {
       steps {
         sh """
           set -eux
-          docker build -f '${DOCKERFILE}' -t '${params.IMAGE_NAME}:${RESOLVED_TAG}' '${BUILD_CONTEXT}'
+          docker build -f '${params.DOCKERFILE}' -t '${params.IMAGE_NAME}:${RESOLVED_TAG}' '${BUILD_CONTEXT}'
         """
       }
     }
