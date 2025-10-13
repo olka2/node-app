@@ -1,7 +1,6 @@
 // Jenkinsfile (Declarative Pipeline, Groovy)
 pipeline {
-  agent { label 'worker-1' } // ← змініть на ваш лейбл воркера з Docker
-
+  agent { label 'j_worker' }
   options {
     disableConcurrentBuilds()
     timestamps()
@@ -9,18 +8,16 @@ pipeline {
 
   parameters {
     // за бажанням змініть параметри під свій репо/тести
-    string(name: 'IMAGE_NAME', defaultValue: 'myapp', description: 'Локальна назва імеджа')
-    string(name: 'DOCKERHUB_REPO', defaultValue: 'your-dockerhub-user/myapp', description: 'repo у Docker Hub: user/repo')
-    string(name: 'IMAGE_TAG', defaultValue: '', description: 'Тег (порожньо = використовувати короткий git SHA або номер білду)')
-    string(name: 'TEST_CMD', defaultValue: 'pytest -q', description: 'Команда тестів всередині контейнера')
-    string(name: 'BUILD_CONTEXT', defaultValue: '.', description: 'Контекст для docker build')
-    string(name: 'DOCKERFILE', defaultValue: 'Dockerfile', description: 'Шлях до Dockerfile відносно контексту')
+    string(name: 'IMAGE_NAME', defaultValue: 'nodeapp')
+    string(name: 'DOCKERHUB_REPO', defaultValue: 'olka2/nodeapp')
+    string(name: 'IMAGE_TAG', defaultValue: '')
+    string(name: 'TEST_CMD', defaultValue: 'pytest -q')
+    string(name: 'BUILD_CONTEXT', defaultValue: '.')
+    string(name: 'DOCKERFILE', defaultValue: 'Dockerfile')
   }
 
   environment {
-    // ID ваших Jenkins credentials (Username/Password) для Docker Hub
     DOCKERHUB_CREDENTIALS_ID = 'dockerhub-creds'
-    // дефолтний тег: короткий SHA або номер білду
     RESOLVED_TAG = "${params.IMAGE_TAG ?: (env.GIT_COMMIT ? env.GIT_COMMIT.take(7) : env.BUILD_NUMBER)}"
   }
 
