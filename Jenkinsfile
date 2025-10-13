@@ -13,7 +13,7 @@ pipeline {
     string(name: 'IMAGE_TAG', defaultValue: '')
     string(name: 'TEST_CMD', defaultValue: 'pytest -q')
     string(name: 'BUILD_CONTEXT', defaultValue: '.')
-    string(name: 'Dockerfile', defaultValue: 'Dockerfile')
+    string(name: 'DOCKERFILE', defaultValue: 'Dockerfile')
   }
 
   environment {
