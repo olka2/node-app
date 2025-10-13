@@ -11,7 +11,7 @@ pipeline {
     string(name: 'IMAGE_NAME', defaultValue: 'nodeapp')
     string(name: 'DOCKERHUB_REPO', defaultValue: 'olka2/nodeapp')
     string(name: 'IMAGE_TAG', defaultValue: '')
-    string(name: 'TEST_CMD', defaultValue: 'pytest -q')
+    string(name: 'TEST_CMD', defaultValue: 'npm test --silent')
     string(name: 'BUILD_CONTEXT', defaultValue: '.')
     string(name: 'DOCKERFILE', defaultValue: 'Dockerfile')
   }
