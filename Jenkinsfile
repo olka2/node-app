@@ -11,7 +11,7 @@ pipeline {
     string(name: 'IMAGE_NAME', defaultValue: 'nodeapp')
     string(name: 'DOCKERHUB_REPO', defaultValue: 'olka2/nodeapp')
     string(name: 'IMAGE_TAG', defaultValue: '')
-    string(name: 'TEST_CMD', defaultValue: 'npm test --silent')
+    string(name: 'TEST_CMD', defaultValue: 'test --silent')
     string(name: 'BUILD_CONTEXT', defaultValue: '.')
     string(name: 'DOCKERFILE', defaultValue: 'Dockerfile')
   }
@@ -40,16 +40,13 @@ pipeline {
 
     stage('Run tests in container') {
       steps {
-        script {
-          // Запускаємо контейнер з тестами; в разі ненульового коду — stage впаде
-          sh """
-            set -eux
+        sh """
+          set -eux
             docker run --rm \\
               -e CI=true \\
               '${params.IMAGE_NAME}:${RESOLVED_TAG}' \\
-              sh -lc "${params.TEST_CMD}"
+              ${params.TEST_CMD}
           """
-        }
       }
     }
 
